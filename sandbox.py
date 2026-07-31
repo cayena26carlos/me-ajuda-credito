@@ -1,24 +1,20 @@
-from app.domain.subjects.registry import registry
-from app.domain.ticket.models import Ticket
+from app.application.services.subject_execution_service import (
+    SubjectExecutionService,
+)
+from app.domain.ticket.service import TicketService
 
+ticket_service = TicketService()
 
-def main():
-    ticket = Ticket(
-        subject="cliente_em_atraso",
-        user_id="U123456",
-        channel="C123456",
-        thread_ts="1753456745.000100",
-    )
+ticket = ticket_service.create(
+    subject="cliente_em_atraso",
+    user_id="U123456",
+    channel="C123456",
+    thread_ts="1234567890.123456",
+)
 
-    subject = registry.get(ticket.subject)
+service = SubjectExecutionService()
 
-    response = subject.execute(ticket)
+response = service.execute(ticket)
 
-    print("=" * 50)
-    print("RESPOSTA DO SUBJECT")
-    print("=" * 50)
-    print(response)
-
-
-if __name__ == "__main__":
-    main()
+print("=" * 50)
+print(response)

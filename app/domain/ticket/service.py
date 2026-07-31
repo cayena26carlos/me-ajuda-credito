@@ -1,6 +1,6 @@
-from app.domain.ticket.models import Ticket
 from app.domain.ticket.enums import TicketStatus
 from app.domain.ticket.exceptions import TicketNotFound
+from app.domain.ticket.models import Ticket
 
 
 class TicketService:
