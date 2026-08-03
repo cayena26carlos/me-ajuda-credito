@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api.v1.endpoints.health import router as health_router
+from app.api.routers.subjects import router as subjects_router
 
 app = FastAPI(
     title="Me Ajuda Crédito",
@@ -8,7 +8,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-app.include_router(health_router)
+app.include_router(subjects_router)
 
 
 @app.get("/", tags=["Root"])

@@ -1,0 +1,24 @@
+from fastapi import APIRouter
+
+from app.api.schemas.request import ExecuteSubjectRequest
+from app.api.schemas.response import ExecuteSubjectResponse
+from app.application.services.execute_subject_service import (
+    ExecuteSubjectService,
+)
+
+router = APIRouter(
+    prefix="/subjects",
+    tags=["Subjects"],
+)
+
+execute_subject_service = ExecuteSubjectService()
+
+
+@router.post(
+    "/execute",
+    response_model=ExecuteSubjectResponse,
+)
+def execute_subject(
+    request: ExecuteSubjectRequest,
+):
+    return execute_subject_service.execute(request)

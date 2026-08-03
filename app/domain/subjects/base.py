@@ -16,4 +16,3 @@ class BaseSubject(ABC):
         """
         Executa a regra do assunto e retorna a resposta.
         """
-        pass

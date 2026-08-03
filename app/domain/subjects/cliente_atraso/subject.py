@@ -1,13 +1,20 @@
 from app.domain.subjects.base import BaseSubject
 from app.domain.ticket.models import Ticket
 
-from .template import CLIENTE_EM_ATRASO_TEMPLATE
+from .service import ClienteEmAtrasoService
 
 
 class ClienteEmAtrasoSubject(BaseSubject):
+    """
+    Subject responsável pelo fluxo Cliente em atraso.
+    """
+
     name = "cliente_em_atraso"
 
     description = "Cliente possui pendências financeiras."
 
+    def __init__(self):
+        self.service = ClienteEmAtrasoService()
+
     def execute(self, ticket: Ticket) -> str:
-        return CLIENTE_EM_ATRASO_TEMPLATE
+        return self.service.execute(ticket)
