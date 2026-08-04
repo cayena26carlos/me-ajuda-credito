@@ -1,3 +1,4 @@
+from app.domain.subjects.enums import SubjectType
 from app.domain.ticket.enums import TicketStatus
 from app.domain.ticket.exceptions import TicketNotFound
 from app.domain.ticket.models import Ticket
@@ -13,16 +14,20 @@ class TicketService:
 
     def create(
         self,
-        subject: str,
+        cnpj: str,
+        subject: SubjectType,
         user_id: str,
         channel: str,
         thread_ts: str,
+        details: str | None = None,
     ) -> Ticket:
         ticket = Ticket(
+            cnpj=cnpj,
             subject=subject,
             user_id=user_id,
             channel=channel,
             thread_ts=thread_ts,
+            details=details,
         )
 
         self._tickets[ticket.id] = ticket

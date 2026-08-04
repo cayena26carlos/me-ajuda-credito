@@ -1,7 +1,9 @@
 from fastapi import APIRouter
 
-from app.api.schemas.request import ExecuteSubjectRequest
-from app.api.schemas.response import ExecuteSubjectResponse
+from app.api.schemas.subjects import (
+    ExecuteSubjectRequest,
+    ExecuteSubjectResponse,
+)
 from app.application.services.execute_subject_service import (
     ExecuteSubjectService,
 )
