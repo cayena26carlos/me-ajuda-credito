@@ -18,3 +18,17 @@ response = service.execute(ticket)
 
 print("=" * 50)
 print(response)
+
+
+"""*/Conteudo.vscode
+{
+    "python.defaultInterpreterPath": ".venv\\Scripts\\python.exe",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.ruff": "explicit",
+        "source.organizeImports.ruff": "explicit",
+    },
+    "python.analysis.typeCheckingMode": "basic",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+}"""
