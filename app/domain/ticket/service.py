@@ -9,8 +9,7 @@ class TicketService:
     Serviço responsável por manipular Tickets.
     """
 
-    def __init__(self):
-        self._tickets: dict[str, Ticket] = {}
+    _tickets: dict[str, Ticket] = {}
 
     def create(
         self,

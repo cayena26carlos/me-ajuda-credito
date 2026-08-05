@@ -1,11 +1,26 @@
+from datetime import datetime
+
 from pydantic import BaseModel
 
+from app.domain.subjects.enums import SubjectType
+from app.domain.ticket.enums import TicketStatus
 
-class ExecuteSubjectResponse(BaseModel):
+
+class TicketResponse(BaseModel):
     """
-    Resposta da execução do Subject.
+    Representação pública de um Ticket.
     """
 
     ticket_id: str
-    status: str
-    message: str
+    cnpj: str
+    subject: SubjectType
+    status: TicketStatus
+    created_at: datetime
+
+
+class TicketListResponse(BaseModel):
+    """
+    Resposta da listagem de Tickets.
+    """
+
+    tickets: list[TicketResponse]

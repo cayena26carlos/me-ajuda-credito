@@ -1,0 +1,17 @@
+from app.domain.ticket.models import Ticket
+from app.domain.ticket.service import TicketService
+
+
+class GetTicketService:
+    """
+    Caso de uso responsável por buscar um Ticket pelo ID.
+    """
+
+    def __init__(self):
+        self.ticket_service = TicketService()
+
+    def execute(
+        self,
+        ticket_id: str,
+    ) -> Ticket:
+        return self.ticket_service.find(ticket_id)

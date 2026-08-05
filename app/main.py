@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.api.routers.subjects import router as subjects_router
+from app.api.routers.tickets import router as tickets_router
 
 app = FastAPI(
     title="Me Ajuda Crédito",
@@ -8,7 +9,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
+print(type(subjects_router))
+print(type(tickets_router))
+
 app.include_router(subjects_router)
+app.include_router(tickets_router)
+
+print(app.routes)
 
 
 @app.get("/", tags=["Root"])
@@ -18,3 +25,8 @@ def root():
         "version": "1.0.0",
         "status": "running",
     }
+
+
+print("===================================")
+print("ROTAS REGISTRADAS")
+print("===================================")
