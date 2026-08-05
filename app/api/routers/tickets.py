@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from app.api.schemas.tickets import TicketListResponse, TicketResponse
+from app.application.services.tickets.close_ticket_service import CloseTicketService
 from app.application.services.tickets.get_ticket_service import GetTicketService
 from app.application.services.tickets.list_tickets_service import ListTicketsService
 from app.domain.ticket.exceptions import TicketNotFound
@@ -47,7 +48,33 @@ def get_ticket(
 
     try:
         ticket = service.execute(ticket_id)
+    except TicketNotFound as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(exc),
+        ) from exc
 
+    return TicketResponse(
+        ticket_id=ticket.id,
+        cnpj=ticket.cnpj,
+        subject=ticket.subject,
+        status=ticket.status,
+        created_at=ticket.created_at,
+    )
+
+
+@router.patch(
+    "/{ticket_id}/close",
+    response_model=TicketResponse,
+    summary="Fechar Ticket",
+)
+def close_ticket(
+    ticket_id: str,
+) -> TicketResponse:
+    service = CloseTicketService()
+
+    try:
+        ticket = service.execute(ticket_id)
     except TicketNotFound as exc:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

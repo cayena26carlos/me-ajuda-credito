@@ -2,9 +2,9 @@ from app.domain.ticket.models import Ticket
 from app.domain.ticket.service import TicketService
 
 
-class GetTicketService:
+class CloseTicketService:
     """
-    Caso de uso responsável por buscar um Ticket pelo ID.
+    Caso de uso responsável por fechar um Ticket.
     """
 
     def __init__(self) -> None:
@@ -14,4 +14,4 @@ class GetTicketService:
         self,
         ticket_id: str,
     ) -> Ticket:
-        return self.ticket_service.find(ticket_id)
+        return self.ticket_service.close(ticket_id)
