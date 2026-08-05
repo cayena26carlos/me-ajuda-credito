@@ -4,7 +4,7 @@ from app.api.schemas.subjects import (
     ExecuteSubjectRequest,
     ExecuteSubjectResponse,
 )
-from app.application.services.execute_subject_service import (
+from app.application.services.subjects.execute_subject_service import (
     ExecuteSubjectService,
 )
 
