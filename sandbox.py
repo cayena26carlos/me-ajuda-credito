@@ -1,4 +1,4 @@
-from app.application.services.subject_execution_service import (
+from app.application.services.subjects.subject_execution_service import (
     SubjectExecutionService,
 )
 from app.domain.ticket.service import TicketService

@@ -12,7 +12,7 @@ class SubjectRegistry:
         self._subjects: dict[str, BaseSubject] = {}
 
     def register(self, subject: BaseSubject):
-        key = subject.name.lower()
+        key = subject.name.value.lower()
 
         if key in self._subjects:
             raise ValueError(f"Subject '{subject.name}' já registrado.")

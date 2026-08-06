@@ -2,9 +2,7 @@ from app.api.schemas.subjects import (
     ExecuteSubjectRequest,
     ExecuteSubjectResponse,
 )
-from app.application.services.subjects.subject_execution_service import (
-    SubjectExecutionService,
-)
+from app.application.services.subjects.subject_engine import SubjectEngine
 from app.domain.ticket.service import TicketService
 
 
@@ -16,7 +14,7 @@ class ExecuteSubjectService:
 
     def __init__(self):
         self.ticket_service = TicketService()
-        self.subject_execution_service = SubjectExecutionService()
+        self.subject_engine = SubjectEngine()
 
     def execute(
         self,
@@ -31,10 +29,10 @@ class ExecuteSubjectService:
             details=request.details,
         )
 
-        message = self.subject_execution_service.execute(ticket)
+        result = self.subject_engine.execute(ticket)
 
         return ExecuteSubjectResponse(
             ticket_id=ticket.id,
             status=ticket.status.value,
-            message=message,
+            message=result.message,
         )
