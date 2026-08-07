@@ -22,3 +22,4 @@ class Ticket:
     id: str = field(default_factory=lambda: str(uuid4()))
     status: TicketStatus = TicketStatus.OPEN
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+    resolved_at: datetime | None = None

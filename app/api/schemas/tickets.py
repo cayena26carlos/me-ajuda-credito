@@ -16,6 +16,7 @@ class TicketResponse(BaseModel):
     subject: SubjectType
     status: TicketStatus
     created_at: datetime
+    resolved_at: datetime | None = None
 
 
 class TicketListResponse(BaseModel):

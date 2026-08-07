@@ -29,6 +29,9 @@ class SupabaseTicketRepository(TicketRepository):
             "details": ticket.details,
             "status": ticket.status.value,
             "created_at": ticket.created_at.isoformat(),
+            "resolved_at": (
+                ticket.resolved_at.isoformat() if ticket.resolved_at is not None else None
+            ),
         }
 
         self._client.table(self.TABLE_NAME).upsert(data).execute()
@@ -77,4 +80,9 @@ class SupabaseTicketRepository(TicketRepository):
             details=str(data["details"]) if data.get("details") is not None else None,
             status=TicketStatus(str(data["status"])),
             created_at=datetime.fromisoformat(str(data["created_at"]).replace("Z", "+00:00")),
+            resolved_at=(
+                datetime.fromisoformat(str(data["resolved_at"]).replace("Z", "+00:00"))
+                if data.get("resolved_at") is not None
+                else None
+            ),
         )

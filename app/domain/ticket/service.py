@@ -1,3 +1,5 @@
+from datetime import UTC, datetime
+
 from app.domain.subjects.enums import SubjectType
 from app.domain.ticket.enums import TicketStatus
 from app.domain.ticket.exceptions import TicketNotFound
@@ -47,7 +49,9 @@ class TicketService:
     def close(self, ticket_id: str) -> Ticket:
         ticket = self.find(ticket_id)
 
-        ticket.status = TicketStatus.CLOSED
+        if ticket.status != TicketStatus.CLOSED:
+            ticket.status = TicketStatus.CLOSED
+            ticket.resolved_at = datetime.now(UTC)
 
         return self._repository.save(ticket)
 

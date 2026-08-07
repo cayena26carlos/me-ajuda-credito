@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from fastapi import APIRouter, HTTPException, status
 
 from app.api.schemas.tickets import TicketListResponse, TicketResponse
@@ -33,6 +35,7 @@ def list_tickets() -> TicketListResponse:
                 subject=ticket.subject,
                 status=ticket.status,
                 created_at=ticket.created_at,
+                resolved_at=ticket.resolved_at,
             )
             for ticket in tickets
         ]
@@ -45,14 +48,14 @@ def list_tickets() -> TicketListResponse:
     summary="Buscar Ticket por ID",
 )
 def get_ticket(
-    ticket_id: str,
+    ticket_id: UUID,
 ) -> TicketResponse:
     service = GetTicketService(
         get_ticket_repository(),
     )
 
     try:
-        ticket = service.execute(ticket_id)
+        ticket = service.execute(str(ticket_id))
     except TicketNotFound as exc:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -65,6 +68,7 @@ def get_ticket(
         subject=ticket.subject,
         status=ticket.status,
         created_at=ticket.created_at,
+        resolved_at=ticket.resolved_at,
     )
 
 
@@ -74,14 +78,14 @@ def get_ticket(
     summary="Fechar Ticket",
 )
 def close_ticket(
-    ticket_id: str,
+    ticket_id: UUID,
 ) -> TicketResponse:
     service = CloseTicketService(
         get_ticket_repository(),
     )
 
     try:
-        ticket = service.execute(ticket_id)
+        ticket = service.execute(str(ticket_id))
     except TicketNotFound as exc:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -94,4 +98,5 @@ def close_ticket(
         subject=ticket.subject,
         status=ticket.status,
         created_at=ticket.created_at,
+        resolved_at=ticket.resolved_at,
     )
