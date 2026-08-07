@@ -1,4 +1,5 @@
 from app.domain.ticket.models import Ticket
+from app.domain.ticket.repository import TicketRepository
 from app.domain.ticket.service import TicketService
 
 
@@ -7,8 +8,11 @@ class GetTicketService:
     Caso de uso responsável por buscar um Ticket pelo ID.
     """
 
-    def __init__(self) -> None:
-        self.ticket_service = TicketService()
+    def __init__(
+        self,
+        repository: TicketRepository,
+    ) -> None:
+        self.ticket_service = TicketService(repository)
 
     def execute(
         self,

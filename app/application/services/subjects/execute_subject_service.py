@@ -3,6 +3,7 @@ from app.api.schemas.subjects import (
     ExecuteSubjectResponse,
 )
 from app.application.services.subjects.subject_engine import SubjectEngine
+from app.domain.ticket.repository import TicketRepository
 from app.domain.ticket.service import TicketService
 
 
@@ -12,8 +13,11 @@ class ExecuteSubjectService:
     do fluxo correspondente ao tipo de atendimento.
     """
 
-    def __init__(self):
-        self.ticket_service = TicketService()
+    def __init__(
+        self,
+        repository: TicketRepository,
+    ) -> None:
+        self.ticket_service = TicketService(repository)
         self.subject_engine = SubjectEngine()
 
     def execute(

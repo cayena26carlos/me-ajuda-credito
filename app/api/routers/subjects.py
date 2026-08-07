@@ -7,13 +7,12 @@ from app.api.schemas.subjects import (
 from app.application.services.subjects.execute_subject_service import (
     ExecuteSubjectService,
 )
+from app.infrastructure.dependencies import get_ticket_repository
 
 router = APIRouter(
     prefix="/subjects",
     tags=["Subjects"],
 )
-
-execute_subject_service = ExecuteSubjectService()
 
 
 @router.post(
@@ -22,5 +21,9 @@ execute_subject_service = ExecuteSubjectService()
 )
 def execute_subject(
     request: ExecuteSubjectRequest,
-):
-    return execute_subject_service.execute(request)
+) -> ExecuteSubjectResponse:
+    service = ExecuteSubjectService(
+        get_ticket_repository(),
+    )
+
+    return service.execute(request)

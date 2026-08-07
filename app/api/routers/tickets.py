@@ -5,6 +5,7 @@ from app.application.services.tickets.close_ticket_service import CloseTicketSer
 from app.application.services.tickets.get_ticket_service import GetTicketService
 from app.application.services.tickets.list_tickets_service import ListTicketsService
 from app.domain.ticket.exceptions import TicketNotFound
+from app.infrastructure.dependencies import get_ticket_repository
 
 router = APIRouter(
     prefix="/tickets",
@@ -18,7 +19,9 @@ router = APIRouter(
     summary="Listar Tickets",
 )
 def list_tickets() -> TicketListResponse:
-    service = ListTicketsService()
+    service = ListTicketsService(
+        get_ticket_repository(),
+    )
 
     tickets = service.execute()
 
@@ -44,7 +47,9 @@ def list_tickets() -> TicketListResponse:
 def get_ticket(
     ticket_id: str,
 ) -> TicketResponse:
-    service = GetTicketService()
+    service = GetTicketService(
+        get_ticket_repository(),
+    )
 
     try:
         ticket = service.execute(ticket_id)
@@ -71,7 +76,9 @@ def get_ticket(
 def close_ticket(
     ticket_id: str,
 ) -> TicketResponse:
-    service = CloseTicketService()
+    service = CloseTicketService(
+        get_ticket_repository(),
+    )
 
     try:
         ticket = service.execute(ticket_id)

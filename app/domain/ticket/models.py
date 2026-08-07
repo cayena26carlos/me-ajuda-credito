@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import UTC, datetime
 from uuid import uuid4
 
 from app.domain.subjects.enums import SubjectType
@@ -21,4 +21,4 @@ class Ticket:
 
     id: str = field(default_factory=lambda: str(uuid4()))
     status: TicketStatus = TicketStatus.OPEN
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(default_factory=lambda: datetime.now(UTC))

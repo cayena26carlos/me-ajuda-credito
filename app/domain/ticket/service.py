@@ -2,6 +2,7 @@ from app.domain.subjects.enums import SubjectType
 from app.domain.ticket.enums import TicketStatus
 from app.domain.ticket.exceptions import TicketNotFound
 from app.domain.ticket.models import Ticket
+from app.domain.ticket.repository import TicketRepository
 
 
 class TicketService:
@@ -9,7 +10,11 @@ class TicketService:
     Serviço responsável por manipular Tickets.
     """
 
-    _tickets: dict[str, Ticket] = {}
+    def __init__(
+        self,
+        repository: TicketRepository,
+    ) -> None:
+        self._repository = repository
 
     def create(
         self,
@@ -29,12 +34,10 @@ class TicketService:
             details=details,
         )
 
-        self._tickets[ticket.id] = ticket
-
-        return ticket
+        return self._repository.save(ticket)
 
     def find(self, ticket_id: str) -> Ticket:
-        ticket = self._tickets.get(ticket_id)
+        ticket = self._repository.find_by_id(ticket_id)
 
         if ticket is None:
             raise TicketNotFound(f"Ticket '{ticket_id}' não encontrado.")
@@ -46,7 +49,7 @@ class TicketService:
 
         ticket.status = TicketStatus.CLOSED
 
-        return ticket
+        return self._repository.save(ticket)
 
     def list(self) -> list[Ticket]:
-        return list(self._tickets.values())
+        return self._repository.list_all()
